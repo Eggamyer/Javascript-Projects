@@ -24,6 +24,13 @@ document.querySelector(".check").addEventListener("click", function () {
     document.querySelector(".number").textContent = secretNumber;
     document.querySelector("body").style.backgroundColor = "#60b347";
     document.querySelector(".number").style.width = "30rem";
+
+    // Disable the check button
+    document.querySelector(".check").disabled = true;
+
+    // Disable the input field
+    document.querySelector(".guess").disabled = true;
+
     if (score > highscore) {
       highscore = score;
       document.querySelector(".highscore").textContent = highscore;
@@ -52,5 +59,17 @@ document.querySelector(".check").addEventListener("click", function () {
     document.querySelector(".guess").value = "";
     document.querySelector("body").style.backgroundColor = "#222";
     document.querySelector(".number").style.width = "15rem";
+
+    // Re-enable the check button
+    document.querySelector(".check").disabled = false;
+
+    // Re-enable the input field
+    document.querySelector(".guess").disabled = false;
   });
+});
+
+document.querySelector(".guess").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    document.querySelector(".check").click();
+  }
 });
