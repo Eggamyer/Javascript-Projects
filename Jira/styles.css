@@ -1,0 +1,249 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 5px 5px;
+  background-color: #f4f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.board {
+  display: flex;
+  gap: 5px;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.column {
+  flex: 1 1 0;
+  min-width: 0;
+  background-color: #ebecf0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.column h2 {
+  margin: 0 0 12px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #172b4d;
+  flex-shrink: 0;
+}
+
+.card {
+  position: relative;
+  background: white;
+  border-radius: 6px;
+  padding: 16px 12px 12px 12px; /* extra top padding for ID */
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  word-wrap: break-word;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Backup ID — top-left, no overlap */
+.card .card-id {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-size: 11px;
+  color: #666;
+  background: #f0f0f0;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.card .title {
+  margin: 14px 0 8px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+}
+.card .description {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #5e6c84;
+  line-height: 1.4;
+}
+.card .acceptance-criteria {
+  font-size: 13px;
+  color: #5e6c84;
+}
+.card .acceptance-criteria ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.modal h2 {
+  margin: 0 0 20px;
+}
+.modal label {
+  display: block;
+  margin: 16px 0 6px;
+  font-weight: 600;
+  color: #172b4d;
+}
+.modal input,
+.modal textarea,
+.modal select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+}
+.modal-buttons {
+  margin-top: 24px;
+  text-align: right;
+}
+.modal-buttons button {
+  padding: 10px 16px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.modal-buttons button[type='submit'] {
+  background: #0079bf;
+  color: white;
+}
+#deleteBtn {
+  background: #d32f2f;
+  color: white;
+}
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #aaa;
+}
+.close:hover {
+  color: #000;
+}
+
+#editModal textarea {
+  resize: none;
+}
+
+/* Type label in top-right */
+.card .type-label {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-size: 11px; /* smaller text */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.card .type-label.story {
+  color: #137333; /* dark green */
+  background: #d4f4e2; /* light green background */
+}
+
+.card .type-label.bug {
+  color: #b3241d; /* dark red */
+  background: #fce7e7; /* light red background */
+}
+
+/* Column card counter – top-right of each column header */
+.column-header {
+  position: relative;
+}
+
+.column-counter {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.15);
+  color: #172b4d;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Fix column title overlap with counter */
+.column h2 {
+  margin: 0 0 12px 4px; /* you already have this */
+  padding-top: 25px; /* ADD THIS — pushes title down */
+  position: relative; /* ADD THIS */
+  z-index: 1; /* ADD THIS — keeps text above background */
+}
+
+/* Drag-and-drop visuals */
+.card[draggable='true'] {
+  cursor: grab;
+}
+
+.card.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.column.drag-over {
+  background: #dfe1e6;
+  border: 2px dashed #0079bf;
+}
+
+/* Visual feedback for required fields */
+.modal input:invalid,
+.modal textarea:invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+}
+
+.modal input:focus:invalid,
+.modal textarea:focus:invalid {
+  outline: none;
+  border-color: #e74c3c;
+}

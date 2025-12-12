@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jira Board</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div
+      style="
+        padding: 10px 20px;
+        background: white;
+        border-bottom: 1px solid #ddd;
+      "
+    >
+      <h1 style="text-align: center; color: #172b4d">Backup Board</h1>
+      <button
+        id="createBtn"
+        style="
+          background: #0079bf;
+          color: white;
+          border: none;
+          padding: 10px 16px;
+          border-radius: 6px;
+          font-weight: 600;
+          cursor: pointer;
+        "
+      >
+        + Create New Jira
+      </button>
+    </div>
+
+    <div class="board">
+      <!-- To Do -->
+      <div class="column" id="to-do" data-status="to-do" draggable="true">
+        <div class="column-header">
+          <h2>To Do</h2>
+        </div>
+        <div class="card" data-status="to-do" data-type="bug">
+          <div class="card-id">Backup-12345</div>
+          <h3 class="title">Cloud Backup Job Fails</h3>
+          <p class="description">
+            User receives job failed error when attempting cloud backup job.
+          </p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>
+                User must be able to run cloud backup job and complete
+                successfully
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card" data-status="to-do" data-type="story">
+          <div class="card-id">Backup-12345</div>
+          <h3 class="title">Add Retry Options for Failed Backup Job</h3>
+          <p class="description">Add a Retry button for failed backup jobs.</p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>
+                User should have Retry button if backup job fails and should
+                re-run backup job successfully
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div
+        class="column"
+        id="in-progress"
+        data-status="in-progress"
+        draggable="true"
+      >
+        <div class="column-header">
+          <h2>In Progress</h2>
+        </div>
+        <div class="card" data-status="in-progress" data-type="bug">
+          <div class="card-id">Backup-12345</div>
+          <h3 class="title">Unable to Save Backup Plan</h3>
+          <p class="description">
+            User is unable to save backup plans when making changes.
+          </p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>
+                User should be able to make changes to backup plan and save
+                successfully
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ready for PR Review -->
+      <div
+        class="column"
+        id="ready-pr"
+        data-status="ready-pr"
+        data-type="story"
+        draggable="true"
+      >
+        <div class="column-header">
+          <h2>Ready for PR Review</h2>
+        </div>
+        <div class="card" data-status="ready-pr">
+          <div class="card-id">Backup-12345</div>
+          <h3 class="title">Add New Option for Scheduled Backup Job</h3>
+          <p class="description">
+            Add option for user to be able to set a scheduled backup job in
+            plan.
+          </p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>
+                User should have new Scheduled Job section when editing plan
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ready for Test -->
+      <div
+        class="column"
+        id="ready-test"
+        data-status="ready-test"
+        draggable="true"
+      >
+        <div class="column-header">
+          <h2>Ready for Test</h2>
+        </div>
+      </div>
+
+      <!-- In Testing -->
+      <div
+        class="column"
+        id="in-testing"
+        data-status="in-testing"
+        data-type="bug"
+        draggable="true"
+      >
+        <div class="column-header">
+          <h2>In Testing</h2>
+        </div>
+        <div class="card" data-status="in-testing">
+          <div class="card-id">Backup-12567</div>
+          <h3 class="title">Receiving Error 500 when Viewing Backup History</h3>
+          <p class="description">
+            User is receiving error 500 when attempting to view backup history.
+          </p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>User should be able to view backup history without error</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ready for PM Validation -->
+      <div class="column" id="ready-pm" data-status="ready-pm" draggable="true">
+        <div class="column-header">
+          <h2>Ready for PM Validation</h2>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div
+        class="column"
+        id="done"
+        data-status="done"
+        data-type="bug"
+        draggable="true"
+      >
+        <div class="column-header">
+          <h2>Done</h2>
+        </div>
+        <div class="card" data-status="done">
+          <div class="card-id">Backup-12345</div>
+          <h3 class="title">Backup Progress Bar is not Completing</h3>
+          <p class="description">
+            Backup Progress Bar is not completing for user when running backup
+            job.
+          </p>
+          <div class="acceptance-criteria">
+            <ul>
+              <li>Backup job should show progress for user</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close">x</span>
+        <h2 id="modalTitleHeader">Backup-00000</h2>
+        <form id="editForm">
+          <label>Title</label>
+          <input type="text" id="modalTitle" required />
+
+          <label>Description</label>
+          <textarea id="modalDescription" rows="4" required></textarea>
+
+          <label>Acceptance Criteria</label>
+          <textarea id="modalAC" rows="6" required></textarea>
+
+          <label>Type</label>
+          <select id="modalType">
+            <option value="story">Story</option>
+            <option value="bug">Bug</option>
+          </select>
+
+          <label>Status</label>
+          <select id="modalStatus">
+            <option value="to-do">To Do</option>
+            <option value="in-progress">In Progress</option>
+            <option value="ready-pr">Ready for PR Review</option>
+            <option value="ready-test">Ready for Test</option>
+            <option value="in-testing">In Testing</option>
+            <option value="ready-pm">Ready for PM Validation</option>
+            <option value="done">Done</option>
+          </select>
+
+          <div class="modal-buttons">
+            <button type="button" id="cancelBtn">Cancel</button>
+            <button
+              type="button"
+              id="deleteBtn"
+              style="background: #4ad32f; color: white; display: none"
+            >
+              Complete Jira
+            </button>
+            <button type="submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
