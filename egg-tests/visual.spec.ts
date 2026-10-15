@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Visual Elements', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('index.html');
   });
 
   test('should display chicken logo with animation', async ({ page }) => {
@@ -153,7 +153,7 @@ test.describe('Visual Elements', () => {
 
 test.describe('Animation States', () => {
   test('wobbling eggs during test execution', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('index.html');
     await page.locator('#incubate-btn').click();
 
     // Wait a bit for eggs to appear

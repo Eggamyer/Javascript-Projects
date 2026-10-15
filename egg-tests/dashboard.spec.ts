@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('EggBuilds Dashboard', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('index.html');
   });
 
   test('should load dashboard with correct title', async ({ page }) => {
@@ -24,10 +24,10 @@ test.describe('EggBuilds Dashboard', () => {
     await expect(statCards).toHaveCount(4);
 
     // Verify stat card labels
-    await expect(page.locator('text=Total Tests')).toBeVisible();
-    await expect(page.locator('text=Passed')).toBeVisible();
-    await expect(page.locator('text=Failed')).toBeVisible();
-    await expect(page.locator('text=Pass Rate')).toBeVisible();
+    await expect(page.locator('.stat-info h3:has-text("Total Tests")')).toBeVisible();
+    await expect(page.locator('.stat-info h3:has-text("Passed")')).toBeVisible();
+    await expect(page.locator('.stat-info h3:has-text("Failed")')).toBeVisible();
+    await expect(page.locator('.stat-info h3:has-text("Pass Rate")')).toBeVisible();
   });
 
   test('should have incubate button', async ({ page }) => {

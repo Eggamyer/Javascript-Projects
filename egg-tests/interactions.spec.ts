@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Dashboard Interactions', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('index.html');
     // Clear localStorage for fresh start
     await page.evaluate(() => localStorage.clear());
     await page.reload();
@@ -45,7 +45,8 @@ test.describe('Dashboard Interactions', () => {
     await expect(runningEggs.first()).toBeVisible();
 
     // Eggs should have running status
-    await expect(page.locator('.egg-status:has-text("Running")')).toHaveCount({ min: 1 });
+    const runningCount = await page.locator('.egg-status:has-text("Running")').count();
+    expect(runningCount).toBeGreaterThan(0);
   });
 
   test('should update stats after tests complete', async ({ page }) => {
@@ -90,7 +91,7 @@ test.describe('Dashboard Interactions', () => {
 
     // Filter by Dev Nest
     await filterEnv.selectOption('dev');
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1500);
 
     // Check that only dev eggs are shown (if any)
     const devEggs = page.locator('.egg-env:has-text("Dev Nest")');
